@@ -1,0 +1,50 @@
+<?php
+
+function challenge_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+	if (($form_id === 'node_company_form') || ($form_id === 'node_company_edit_form') ) {
+		$form['#validate'][] = 'challenge_node_company_form_validate';
+	}
+	
+	// $form['#submit'][] = 'challenge_node_company_form_submit';
+}
+
+
+function challenge_node_company_form_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+
+	$email = $form_state->getValue('field_email');
+	$email_value = $email[0]['value'];
+
+	if(substr( $email_value, 0, 8 ) === "no-reply") {
+		$form_state->setErrorByName('field_email', t('Please enter a valid response email'));
+	}
+	
+	// $node = $form_state->getFormObject()->getEntity()->getEntityTypeId();
+	// drupal_set_message("Please enter a valid response email.");
+
+	// $node = $form_state->getFormObject()->getEntity();
+	// if ($node->getType() == 'company') {
+	// 	if ($form_state->getValue('field_email') === 'no-reply') {
+	// 		$form_state->setErrorByName('field_email', t('Please enter a valid response email.'));
+	// 	}
+	// }
+}
+
+// function challenge_node_company_form_submit(&$form, FormStateInterface $form_state) {
+// 	$form_state->setErrorByName('field_email', t('Please enter a valid response email.'));
+// }
+
+
+
+
+// function challenge_company_form_validate($form, $form_state, $form_id) {
+
+// 	$email = $form_state->getValue('company');
+// 	print_r($form_id);
+
+	// $node = $form_state->getFormObject()->getEntity();
+	// if ($node->getType() == 'company') {
+	// 	if ($form_state->getValue('field_email') === 'no-reply') {
+	// 		$form_state->setErrorByName('field_email', t('Please enter a valid response email.'));
+	// 	}
+	// }
+// }
