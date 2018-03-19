@@ -1,0 +1,3 @@
+services:
+ challenge.date_calculator:
+   class: Drupal\challenge\DateCalculator
