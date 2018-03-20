@@ -17,8 +17,7 @@ function challenge_node_company_form_validate(&$form, \Drupal\Core\Form\FormStat
 	$email_value = $email[0]['value'];
 
 	// checks if begining of value from email field is the same as no-reply
-	preg_match("/no-reply/", $email_value, $value);
-	if($value[0] === "no-reply") {
+	if(preg_split("/@/", $email_value)[0] === "no-reply") {
 		$form_state->setErrorByName('field_email', t('Please enter a valid response email'));
 	}
 	
