@@ -22,13 +22,22 @@ class ChallengeBlock extends BlockBase {
 
 
 	public function build() {
-		$node = \Drupal::routeMatch()->getParameter('node');
-		// gets value from date field and converts it into  unix timestamp
-		$date = strtotime($node->get('field_event_date')->value);
+		if ($node = \Drupal::routeMatch()->getParameter('node')) {
+    		if ($node->hasField('field_event_date')) {
+    			$node = \Drupal::routeMatch()->getParameter('node');
+				// gets value from date field and converts it into  unix timestamp
+				$date = strtotime($node->get('field_event_date')->value);
 
-		$dateCalculator = new DateCalculator();
-        $response = $dateCalculator->calculator($date);
-        return $response;
+				$dateCalculator = new DateCalculator();
+				$response = $dateCalculator->calculator($date);
+
+				$build = [];
+				$build['#cache']['max-age'] = 0;
+				$build['sample_block_extra_text']['#markup'] = $response;
+				return $build;
+			}
+		}
+		
 	}
 
 }

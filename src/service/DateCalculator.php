@@ -30,11 +30,7 @@ class DateCalculator {
 			$out = 'The event is in progress.';
 		}
 
-		$build = [];
-		$build['#cache']['max-age'] = 0;
-		$build['sample_block_extra_text']['#markup'] = $out;
-
-		return $build;
+		return $out;
 
 	}
 }
